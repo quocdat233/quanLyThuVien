@@ -110,13 +110,6 @@ public class Login_User extends JFrame {
                 txtUser.setForeground(Color.darkGray);}}
         });
 
-
-
-
-
-
-
-
         // Đặt vị trí lblPass và txtPass
 
 
@@ -253,7 +246,8 @@ public class Login_User extends JFrame {
                     } else {
                         JOptionPane.showMessageDialog(Login_User.this, "Sai tài khoản hoặc mật khẩu,bạn có thể đăng nhập bằng Email đăng kí !");
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex) {
                     JOptionPane.showMessageDialog(Login_User.this, "Lỗi kết nối cơ sở dữ liệu: " + ex.getMessage());
                 }
             }

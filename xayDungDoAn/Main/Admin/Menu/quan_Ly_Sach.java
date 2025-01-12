@@ -5,6 +5,8 @@ import DoAncuoiki1.xayDungDoAn.Main.Login_Admin;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +20,7 @@ public class quan_Ly_Sach extends JFrame {
     // Khai báo các thành phần giao diện dưới dạng private
     private JLabel lbl1,lbl2,lbl3,lbl4,lbl5,lbl6,lbl7,lbl8,lblTongSoSach,lblTong,lbl9,lbl10;
     private JTextField txt1, txt2, txt3, txt4, txt5, txt6,txt7,txt8;
-    private JButton btn1,btn2,btn3;
+    private JButton btn1,btn2,btn3,btn4;
     private JTable table,table1;
     private JPanel pn1,pn2,pn3,pnTimKiem;
     private JScrollPane scrollPane,scrollPane1;
@@ -73,7 +75,7 @@ public class quan_Ly_Sach extends JFrame {
         txt7.setBounds(120, 150, 150, 22);
 
         btn1 = new JButton("Thêm sách");
-        btn1.setBounds(400, 147, 150, 25);
+        btn1.setBounds(365, 147, 100, 25);
         btn1.setFocusPainted(false);
         btn1.setBackground(Color.LIGHT_GRAY);
 
@@ -344,6 +346,26 @@ public class quan_Ly_Sach extends JFrame {
             }
         });
 
+
+        btn4 = new JButton("Xóa sách");
+        btn4.setBounds(480, 147, 100, 25);
+        btn4.setFont(new Font("Arial", Font.BOLD, 12));
+        btn4.setBackground(Color.LIGHT_GRAY);
+        btn4.setFocusPainted(false);
+        btn4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (txt1.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(quan_Ly_Sach.this, "Vui lòng nhập id cần xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                else
+                deleteData();
+
+            }
+        });
+        pn1.add(btn4);
+
         btn3 = new JButton("Load Bảng");
         btn3.setBounds(250,135, 100,25);
         btn3.setFont(new Font("Arial", Font.BOLD, 12));
@@ -483,6 +505,7 @@ public class quan_Ly_Sach extends JFrame {
         table1.setBackground(new Color(243, 250, 243));
         table.setBackground(new Color(243, 250, 243));
         btn1.setBackground(new Color(203, 194, 189));
+        btn4.setBackground(new Color(203, 194, 189));
         btn2.setBackground(new Color(203, 194, 189));
         btn3.setBackground(new Color(203, 194, 189));
 
@@ -639,6 +662,28 @@ public class quan_Ly_Sach extends JFrame {
             JOptionPane.showMessageDialog(quan_Ly_Sach.this, "Lỗi khi đếm tổng số sách: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+    private void deleteData() {
+        String maSach = txt1.getText();
+        String query = "DELETE FROM Sach WHERE Ma_Sach = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, maSach);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Xoá thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                model.setRowCount(0); // Xóa toàn bộ dữ liệu hiện tại
+                loadSachTable();  // Tải lại dữ liệu
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy sách để xóa!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi khi kết nối cơ sở dữ liệu!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
 
 

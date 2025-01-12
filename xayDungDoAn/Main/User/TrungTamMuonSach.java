@@ -308,7 +308,7 @@ public class TrungTamMuonSach extends JFrame {
                               }
                           }
                       }
-
+//stmt.setDate(6, java.sql.Date.valueOf(selectedDate));
                       // Nếu không có vấn đề gì, tiến hành đăng ký
                       String queryInsert = "INSERT INTO sachChoDangKi(Ma_Sach, Ten_Sach, Tac_Gia, Nha_Xuat_Ban, The_Loai,  Ngay_Het_Han,Gia_Tien, Ma_SinhVien,ngay_muon) VALUES (?, ?, ?,?, ?, ?, ?,?, ?)";
                       try (Connection conn = DriverManager.getConnection(URL, USER, PASS);
@@ -429,6 +429,7 @@ public class TrungTamMuonSach extends JFrame {
         pnTimKiem.setBackground(new Color(245, 255, 240));
         getContentPane().setBackground(new Color(74, 136, 136));
         table1.setBackground(new Color(243, 250, 243));
+        table2.setBackground(new Color(243, 250, 243));
         btnLoad.setBackground(new Color(203, 194, 189));
         btn1.setBackground(new Color(203, 194, 189));
         btn2.setBackground(new Color(203, 194, 189));
@@ -509,9 +510,7 @@ public class TrungTamMuonSach extends JFrame {
 
     public static void main(String[] args) {
         new TrungTamMuonSach("MSV144");
-        new TrungTamMuonSach("MSV145");
-        new TrungTamMuonSach("MSV144");
-        new TrungTamMuonSach("MSV144");
+
 
     }
 

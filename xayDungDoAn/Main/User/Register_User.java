@@ -374,7 +374,7 @@ public class Register_User extends JFrame {
                         return;
                     }
 
-                hoVaTen = hoVaTen.toUpperCase();
+                hoVaTen = hoVaTen.toLowerCase();
                 String [] arr = hoVaTen.split("\\s+");
                 StringBuilder sb = new StringBuilder();
                 for(String fullname : arr){
